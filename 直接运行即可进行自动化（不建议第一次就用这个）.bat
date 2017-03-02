@@ -1,0 +1,1 @@
+cnpm install&&bower update&&grunt bower&&grunt

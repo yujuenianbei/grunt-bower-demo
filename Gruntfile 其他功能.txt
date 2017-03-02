@@ -1,0 +1,314 @@
+module.exports = function(grunt) {
+    // Project configuration.
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        //ģ��ĺϲ� js/css
+        concat: {
+            options: {
+                //�ļ����ݵķָ���
+                separator: ';',
+                stripBanners: true,
+                banner: '/* <%= pkg.name %> -v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> */'
+            },
+            jsConcat: {
+                src: ['public/js/*.js'],
+                dest: 'build/js/<%= pkg.name %>-v<%= pkg.version %>.js'
+            }
+            //���ֺϲ��Ļ��зֺ�
+            //cssConcat: {
+            //    src: ['public/css/*.css'],
+            //    dest: 'build/css/<%= pkg.name %>.css'
+            //}
+        },
+        //js���
+        jshint:{
+            build:['Gruntfile.js','public/js/*.js'],
+            options:{
+                jshintrc:'.jshint'
+            }
+        },
+        //js�ļ�ѹ��
+        uglify: {
+            options: {
+                stripBanners:true,
+                banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+            },
+            build: {
+                src: 'build/js/*.js',
+                dest: 'build/js/<%= pkg.name %>-v<%= pkg.version %>.min.js'
+            }
+        },
+        //less�������
+        less: {
+            main: {
+                expand: true,
+                src: ['public/css/*.less'],
+                dest: '',
+                ext: '.css'
+            },
+            dev: {
+                options: {
+                    compress: true,
+                    yuicompress:true
+                }
+            }
+        },
+        //css���
+        csslint:{
+            //��֤����
+            options:{
+                csslintrc:'.csslint'
+            },
+            build:['build/css/*.css']
+        },
+
+        //cssѹ��
+
+        //�����ļ���ѹ��
+        //cssmin: {                                 //css�ļ�ѹ��
+        //    css: {
+        //        src: 'build/css/<%= pkg.name %>.css',          //��֮ǰ��all.css
+        //        dest: 'build/css/<%= pkg.name %>.min.css'  //ѹ��
+        //    }
+        //},
+
+        //���϶��css��ѹ��
+        cssmin: {
+            options: {
+                stripBanners:true,
+                banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+            },
+            compress: {
+                files: {
+                    'build/css/<%= pkg.name %>-v<%= pkg.version %>.min.css': [
+                        "public/css/*.css"
+                    ]
+                }
+            }
+        },
+
+        //���ж��cssѹ��
+        //cssmin: {
+        //    target: {
+        //        files: [{
+        //            expand: true,
+        //            cwd: 'public/css',
+        //            src: ['*.css', '!*.min.css'],
+        //            dest: 'build/css',
+        //            ext: '.min.css'
+        //        }]
+        //    }
+        //},
+
+        //html���
+        htmlhint: {
+            options: {
+                htmlhintrc: '.htmlhint'
+            },
+            html1: {
+                src: ['views/*.html']
+            }
+            //html2: {
+            //    src: ['path/to/**/*.html']
+            //}
+        },
+
+        //ͼƬѹ��
+        //imagemin: {
+        //    static: {                          // Target
+        //        options: {                       // Target options
+        //            optimizationLevel: 3,
+        //        },
+        //        files: {                         // Dictionary of files
+        //            'public/img.png': 'images/images.jpg' // 'destination': 'source'
+        //        }
+        //    },
+        //    dynamic: {                         // Another target
+        //        files: [{
+        //            expand: true,                  // Enable dynamic expansion
+        //            cwd: 'src/',                   // Src matches are relative to this path
+        //            src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
+        //            dest: 'dist/'                  // Destination path prefix
+        //        }]
+        //    }
+        //},
+
+
+        //����
+        //copy: {
+        //    main: {
+        //        files: [
+        //            // includes files within path
+        //            {expand: true, src: ['path/*'], dest: 'dest/', filter: 'isFile'},
+        //            // includes files within path and its sub-directories
+        //            {expand: true, src: ['path/**'], dest: 'dest/'},
+        //            // makes all src relative to cwd
+        //            {expand: true, cwd: 'path/', src: ['**'], dest: 'dest/'},
+        //            // flattens results to a single level
+        //            {expand: true, flatten: true, src: ['path/**'], dest: 'dest/', filter: 'isFile'},
+        //        ],
+        //    },
+        //},
+
+        //���
+        clean: {
+            test: ['build'],
+            dest:{
+                expand:true
+            }
+        },
+        //clean: {
+            //build: ["path/to/dir/one", "path/to"],
+            //release: ["path/to/another/dir/one", "path/to/another/dir/two"]
+        //}
+
+        //��Ԫ���Կ��jasmine
+
+        //jasmine: {
+        //    pivotal: {
+        //        src: 'src/**/*.js',
+        //        options: {
+        //            specs: 'spec/*Spec.js',
+        //            helpers: 'spec/*Helper.js'
+        //        }
+        //    }
+        //},
+
+        //��Ԫ���Կ��qunit
+        qunit: {
+            all: {
+                options: {
+                    urls: [
+                        'http://localhost:63342/test/views/index.html'
+                    ]
+                }
+            }
+        },
+        connect: {
+            server: {
+                options: {
+                    port: 63342,
+                    base: '.'
+                }
+            }
+        },
+
+        //单元测试框架qunit
+        //qunit: {
+        //    all: {
+        //        options: {
+        //            urls: [
+        //                'http://localhost:63342/test/views/index.html'
+        //            ]
+        //        }
+        //    }
+        //},
+
+        //connect: {
+        //    server: {
+        //        options: {
+        //            port: 63342,
+        //            base: '.'
+        //        }
+        //    }
+        //},
+
+        //自动化
+          bower: {
+             install: {
+                 options: {
+                     targetDir: 'bower/js/',
+                     layout: 'byComponent',
+                     install: true,
+                     verbose: false,
+                     cleanTargetDir: false,
+                     cleanBowerDir: false,
+                     bowerOptions: {}
+                 }
+             }
+
+         },
+        //bower: {
+        //    dev: {
+        //        dest: 'bowerjs/',
+        //        js_dest: 'bowerjs/js',
+        //        css_dest: 'bowerjs/styles'
+        //    }
+        //},
+        watch:{
+            html: {
+                files: ['views/*.html'],
+                tasks:[  'htmlhint', 'uglify'],
+                options: {livereload:true}
+            },
+            css: {
+                files: ['public/css/*.css','build/css/*.css'],
+                tasks:[  'csslint', 'uglify'],
+                options: {livereload:true}
+            },
+            js: {
+                files: ['public/*.js','bower/*.js'],
+                tasks:[ 'jshint', 'uglify'],
+                options: {livereload:true}
+            },
+            less: {
+                files: ['build/css/*.less'],
+                options: {livereload:false},
+                tasks: ['less:main']
+            }
+        }
+    });
+
+
+    // Load any grunt plugins found in package.json.
+    require("load-grunt-tasks")(grunt, { scope: "devDependencies" });
+    require("time-grunt")(grunt);
+
+    // ���ذ��� "concat" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    // ���ذ��� "less" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-less');
+    // ���ذ��� "jshint" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    // ���ذ��� "csslint" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-csslint');
+    // ���ذ��� "cssmin" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    // ���ذ��� "htmlhint" ����Ĳ����
+    grunt.loadNpmTasks('grunt-htmlhint');
+    // ���ذ��� "uglify" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    // ���ذ��� "clean" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    // ���ذ��� "imagemin" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    // ���ذ��� "watch" ����Ĳ����
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
+    // ���ذ��� "qunit" ����Ĳ����
+    //grunt.loadNpmTasks('grunt-contrib-qunit');
+    // ���ذ��� "livereload" ����Ĳ����
+    //grunt.loadNpmTasks('grunt-contrib-livereload');
+    // ���ذ��� "copy" ����Ĳ����
+    //grunt.loadNpmTasks('grunt-contrib-copy');
+
+
+    // Ĭ�ϱ�ִ�е������б�
+    grunt.registerTask('default', [
+        'clean',
+        'jshint',
+        'concat',
+        'less',
+        'csslint',
+        'cssmin',
+        'uglify',
+        'htmlhint',
+        'watch']);
+    //grunt.registerTask('watch', ['watch']);
+    //grunt.registerTask('watch', ['watch']);
+    //grunt.registerTask('watch', ['watch']);
+    //grunt.registerTask('watch', ['watch']);
+    //grunt.registerTask('watch', ['watch']);
+    //grunt.registerTask('watch', ['watch']);
+};

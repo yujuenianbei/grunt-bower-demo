@@ -1,0 +1,57 @@
+﻿bitwise 禁用位运算符，位运算符在 JavaScript 中使用较少，经常是把 && 错输成 &
+curly   循环或者条件语句必须使用花括号包围
+eqeqeq  强制使用三等号
+es3     兼容低级浏览器 IE 6/7/8/9
+freeze  禁止重写原生对象的原型，比如 Array ， Date
+indent  代码缩进
+latedef 禁止定义之前使用变量，忽略 function 函数声明
+newcap  构造器函数首字母大写
+noarg   禁止使用 arguments.caller 和 arguments.callee ，未来会被弃用， ECMAScript 5 禁止使用 arguments.callee
+quotmark    为 true 时，禁止单引号和双引号混用
+undef   变量未定义
+unused  变量未使用
+strict  严格模式
+maxparams   最多参数个数
+maxdepth    最大嵌套深度
+maxcomplexity   复杂度检测
+maxlen  最大行数
+asi 宽松选项
+boss    控制“缺少分号”的警告
+debug   忽略 debugger
+evil    控制 eval 使用警告
+lastsemic   检查一行代码最后声明后面的分号是否遗漏
+laxcomma    检查不安全的折行，忽略逗号在最前面的编程风格
+loopfunc    检查循环内嵌套 function
+multistr    检查多行字符串
+sub     person['name'] vs. person.name
+supernew    new function () { ... } 和 new Object ;
+validthis   在非构造器函数中使用 this
+browser     预定义一些全局变量 预定义全局变量 document ， navigator ， FileReader 等
+devel       定义用于调试的全局变量： console ， alert
+jquery(node)  定义全局变量
+
+
+
+
+    "node" : true,
+    "es5": true,
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": false,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonew": true,
+    "plusplus": false,
+    "undef": true,
+    "strict": false,
+    "trailing": false,
+    "globalstrict": true,
+    "nonstandard": true,
+    "white": true,
+    "indent": 2,
+    "expr": true,
+    "onevar": false
